@@ -16,8 +16,10 @@ library(benford)
 #https://cran.r-project.org/web/packages/BenfordTests/BenfordTests.pdf
 ##### PROBE Adults #####
 #############All
-PROBEdata <- read.csv("PROBE.csv", sep = ',', head = T, fileEncoding = "UTF-8")
+PROBEdata <- read.csv("Sample_Data.csv", sep = ',', head = T, fileEncoding = "UTF-8")
 
+#----BEWARE----#
+# These cutoffs are the upper and lower limits of detection of the instrument. Because the sample data has been artifically generated, these will not be relevant and should be updated for 
 As.pr1 <- PROBEdata$As %>% 
   as.data.frame() %>% 
   filter(PROBEdata$As > 0.27) %>% 
@@ -136,7 +138,7 @@ signifd.analysis(pr1.all, graphical_analysis = TRUE, freq = FALSE,
                  alphas = 20, tick_col = "red", ci_col = "lightblue",
                  ci_lines = c(0.05))
 
-title(main = "PROBE Adult All")
+title(main = "Sample_Data Adult All")
 
 summary(pr1.all)
 
@@ -151,7 +153,7 @@ JS.pr1.ess <- meandigit.benftest(pr1.ess, pvalmethod = "asymptotic")
 data <- signifd.analysis(pr1.ess, graphical_analysis = TRUE, freq = FALSE,
                  alphas = 20, tick_col = "red", ci_col = "lightblue",
                  ci_lines = c(0.05))
-title(main = "PROBE Adult Essential")
+title(main = "Sample_Data Adult Essential")
 
 #Trial for graphs
 freq <- as.numeric(data$summary[1, ])
@@ -160,7 +162,7 @@ CI_lower <- as.numeric(data$CIs[1, ])
 CI_median <- as.numeric(data$CIs[2, ])
 CI_upper <- as.numeric(data$CIs[3, ])
 plot(1:9, freq, type = "p", ylim = c(0, 0.6), xlab = "Digit", ylab = "Frequency",
-     pch = 19, col = "red", main = "PROBE Adult Essential")
+     pch = 19, col = "red", main = "Sample_Data Adult Essential")
 
 # Add confidence intervals
 arrows(1:9, CI_lower, 1:9, CI_upper, length = 0.05, angle = 90, code = 3, col = "lightblue")
@@ -193,7 +195,7 @@ JS.pr1.non <- meandigit.benftest(pr1.non, pvalmethod = "asymptotic")
 signifd.analysis(pr1.non, graphical_analysis = TRUE, freq = FALSE,
                  alphas = 20, tick_col = "red", ci_col = "lightblue",
                  ci_lines = c(0.05))
-title(main = "PROBE Adult Non Essential")
+title(main = "Sample_Data Adult Non Essential")
 
 ##############Beneficial
 pr1.benf <- (c(Cr.pr1,Mn.pr1,Ni.pr1,Sn.pr1))
@@ -208,9 +210,9 @@ JS.pr1.benf <- meandigit.benftest(pr1.benf, pvalmethod = "asymptotic")
 signifd.analysis(pr1.benf, graphical_analysis = TRUE, freq = FALSE,
                  alphas = 20, tick_col = "red", ci_col = "lightblue",
                  ci_lines = c(0.05))
-title(main = "PROBE Adult Beneficial")
+title(main = "Sample_Data Adult Beneficial")
 
-
+#----------------- The following code uses the original datasets and will therefore not be compatible with the sample data --------#
 ##### PROBE Adolescents ######
 #### All elements using JS test
 PROBEteendata <- read.csv("PROBE_teen.csv", sep = ',')
